@@ -12,35 +12,23 @@ layout(location = 0) out vec3 v_WorldPos;
 void main()
 {
     vec3 displaced = a_Position;
-
-    // Ripple displacement on Y axis
-   // displaced.y = sin(displaced.x * 4.0 + u_Time) * 0.05
-     //           + sin(displaced.z * 4.0 + u_Time) * 0.05;
-
     v_WorldPos = displaced;
-
     gl_Position = u_matp * u_matv * vec4(displaced, 1.0);
 }
 
 #shader Fragment
-#version 440 core
+#version 450 core
 
 layout(location = 0) in vec3 v_WorldPos;
-
 layout(location = 0) out vec4 FragColor;
 
-uniform vec3 u_viewp;  // camera/view position
+uniform vec3 u_viewp;  
 
 void main()
 {
     vec3 baseColor = vec3(0.10, 0.10, 0.10);
-
-    // Distance from camera to fragment position
     float dist = distance(u_viewp, v_WorldPos);
-
-    // Fade from 1 to 0 over a distance of 20 units
     float fade = clamp(1.0 - dist / 50.0, 0.0, 1.0);
-
     FragColor = vec4(baseColor,fade);
 }
 

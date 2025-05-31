@@ -32,6 +32,7 @@ void main() {
 
 
 
+
 #shader Fragment
 #version 450 core
 
@@ -71,13 +72,13 @@ void main() {
 
     vec3 viewDir = normalize(u_viewp - FragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0),5);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0),material.shininess);
     vec3 specular = spec * material.specular;
 
-    //float SpecularMap = texture(u_Texture1 , TextCoord).r;
+    //float SpecularMap = texture(u_Texture1, TextCoord).r;
     vec3 ambient = 0.1 * material.ambient;
 
-    vec4 lighting = vec4(u_color * (ambient + diffuse + specular), 1.0);
+    vec4 lighting = vec4(u_color * (ambient + diffuse), 1.0);
     vec4 DiffuseMap = texture(u_Texture0, TextCoord);
 
     if (u_usec) {
@@ -86,5 +87,6 @@ void main() {
         color = DiffuseMap * lighting;
     }
 }
+
 
 

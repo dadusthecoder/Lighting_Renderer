@@ -211,7 +211,7 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
         };
     }
    
-    return Mesh(Vertices, Indices, material , Textures);
+    return Mesh(Vertices, Indices, material ,Textures);
 }
 
 // Recursively process nodes

@@ -23,10 +23,10 @@ private:
     std::unique_ptr<Model> m_model;
 
     glm::vec3 modelRotation = { 0.0f, 0.0f, 0.0f };
-    glm::vec3 modelPosition = { 0.0f, 1.0f, 0.0f };
+    glm::vec3 modelPosition = { 0.0f, 0.0f, 0.0f };
     glm::vec3 modelScale = { 1.0f, 1.0f, 1.0f };
 
-	glm::vec3 viewp  = glm::vec3(0.0, 0.0, 4.0);
+	glm::vec3 viewp  = glm::vec3(0.0, 0.0, 0.0);
 	glm::vec3 lightp = glm::vec3(-5.0, 5.0, 1.0);
 	glm::vec3 lightc = glm::vec3(0.4f, 0.4f, 0.4f);
 	glm::vec3 backc  = glm::vec3(0.0, 0.0, 0.0);
