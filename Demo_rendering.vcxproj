@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\helpers\Filedial.h" />
     <ClInclude Include="src\Logger.h" />
     <ClInclude Include="src\Renderer\BufferLayout.h" />
     <ClInclude Include="src\Renderer\camera.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="src\Renderer\Texture.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\testGimzos.h" />
     <ClInclude Include="src\tests\testLightning.h" />
     <ClInclude Include="src\tests\testmodel.h" />
@@ -156,6 +158,13 @@
     <ClCompile Include="src\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="src\tests\testLightning.cpp" />
     <ClCompile Include="src\tests\testmodel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\bsc.shader" />
+    <None Include="res\shaders\Depth.shader" />
+    <None Include="res\shaders\grid.shader" />
+    <None Include="res\shaders\PBR.shader" />
+    <None Include="res\shaders\ShadowDebug.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

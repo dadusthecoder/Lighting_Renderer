@@ -2,6 +2,10 @@
 #include"Logger.h"
 #include"tests/testmodel.h"
 
+//TODO
+//Fix the diffuse texture mapping issue 
+// shadow implementation 
+
 #ifdef LGT_DEBUG
 #define MAIN int main()
 #else
@@ -35,7 +39,7 @@ MAIN
 	//initilize imgui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();(void)io;
+	
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("# version 450");
     
@@ -47,17 +51,16 @@ MAIN
 	
 	Logger::GetInstance().SetLogFile("log.txt");
 	LOG(LogLevel::DEBUG, "every one is also fuckef up in there own way");
-	testModel* test= new testModel();
+
+	Test* test = new testModel;
+
 	//game loop
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
-	    
 		test->onUpdate(window);
 		test->onRender();
-		test->onImguiRnder();
-
-		
+		test->onImguiRender();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

@@ -61,8 +61,8 @@ void  Texture::cleanUp()
 
 void Texture::Bind(unsigned int slot) const
 {   
-	glActiveTexture(GL_TEXTURE0+slot);
- 	glBindTexture(GL_TEXTURE_2D, m_RenderID);
+		glActiveTexture(GL_TEXTURE0+slot);
+ 		glBindTexture(GL_TEXTURE_2D, m_RenderID);
  }
 
 void Texture::Unbind() const 
@@ -70,3 +70,12 @@ void Texture::Unbind() const
 	glBindTexture(GL_TEXTURE_2D,0);
 }
 
+void Texture::setType(TextureType type)
+{
+	m_type = type; 
+}
+
+TextureType Texture::getType() const
+{
+	return m_type;
+}

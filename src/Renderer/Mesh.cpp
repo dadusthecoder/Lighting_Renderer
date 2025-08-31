@@ -43,19 +43,64 @@ Mesh::Mesh(const std::vector<vertex>& data, const std::vector<unsigned int>& ind
 
 void Mesh::render(const shader& shader)
 {
-    shader.Bind();
-    shader.setuniform1i("u_usec",0);
- 
-    for (int i = 0 ; i < Textures.size() ; i++ )
+    shader.use();
+    switch (shader.getType())
     {
-        Textures[i]->Bind(i);
-        shader.setuniform1i("u_Texture" + std::to_string(i),i);
+    case ShaderType::COLORSHADER:
+    {
+
+        for (int i = 0; i < Textures.size(); i++)
+        {
+            auto it = Textures[i];
+            switch (it->getType())
+            {
+            case  TextureType::DIFFUSE: {
+                it->Bind(i);
+                break;
+            };
+            case  TextureType::NORMAL: {
+                it->Bind(i);
+                break;
+            };
+            case  TextureType::SPECULAR: {
+                it->Bind(i);
+                break;
+            };
+            case  TextureType::HEIGHT: {
+                it->Bind(i);
+                break;
+            };
+            case  TextureType::AMBIENT: {
+                it->Bind(i);
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        break;
     }
+    case ShaderType::DEPTHSHADER:{
+        break;
+    }
+    default:
+        break;
+    }
+  
     
     glBindVertexArray(m_vao);
-    shader.setmaterial(_material);
     GlCall(glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr));
     glBindVertexArray(0);
+}
+
+void Mesh::setTransform(glm::mat4 transform)
+{
+    _transform = transform;
+}
+
+glm::mat4 Mesh::getTransform()
+{
+    return _transform;
 }
 
 void Mesh::cleanUp()

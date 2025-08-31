@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<memory>
+#include"cstdint"
 
 #include<GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -26,37 +27,161 @@
 #include"BufferLayout.h"
 #include"Texture.h"
 
-class camera;
+#define SHADOW_WIDTH   2048 
+#define SHADOW_HEIGHT  2048
 
-#define ASSERT(x) if(!(x))__debugbreak();
-#define GlCall(x) \
-    GLclearerror(); \
-    x; \
-    ASSERT(GLlog(#x,__FILE__, __LINE__))
+class  camera;
+using  RenderId = unsigned int;
 
-void GLclearerror();
-bool GLlog(const char* function, const char* file, const int line);
+struct Material {
+    glm::vec3 specular;
+    glm::vec3 ambient;
+    glm::vec3 diffuse;
+    float shininess;
+    float normalStrength;
+    bool hasNormalMap;
+    bool hasSpecularMap;
+
+    // Default constructor
+    Material() :
+        specular(0.5f),
+        ambient(0.2f),
+        diffuse(0.8f),
+        shininess(100.0f),
+        normalStrength(1.0f),
+        hasNormalMap(false),
+        hasSpecularMap(false) {
+    }
+};
+
+struct GridSettings {
+    glm::vec3 baseColor = glm::vec3(0.1f, 0.1f, 0.15f);
+    glm::vec3 gradientColor = glm::vec3(0.2f, 0.4f, 0.8f);
+    float fadeDistance = 50.0f;
+    float gridIntensity = 0.5f;
+    float waveAmplitude = 0.5f;
+    float waveFrequency = 0.1f;
+    bool  enableAnimation = false;
+    bool  enableGrid = true;
+    bool  enableGradient = true;
+};
+
+class FrameBuffer {
+private:
+    
+    float m_width , m_height;
+
+    RenderId m_FBO;
+    RenderId m_textureId;
+    RenderId m_renderbuffer;
+
+public:
+    RenderId GetTextureId();
+    RenderId GetHeight();
+    RenderId GetWidth();
+    void Use();
+    void Unuse();
+    FrameBuffer(float w, float h);
+    ~FrameBuffer();
+ };
+
+class DepthBuffer {
+private:
+    RenderId m_BufferId;
+    RenderId m_textureId;
+
+public:
+
+     DepthBuffer();
+    ~DepthBuffer();
+     RenderId GetTextureId();
+
+    void BindTex(unsigned int unit);
+    void UnBindTex();
+    void Use();
+    void Unsue();
+    void Bind();
+    void UnBind();
+};
+
+class Grid {
+
+private:
+    std::unique_ptr<shader> m_gridShader;
+    GLuint m_VAO, m_VBO, m_EBO;
+    std::vector<float> m_vertices;
+    std::vector<unsigned int> m_indices;
+
+    // Animation settings  
+    GridSettings m_settings;
+
+    float m_time = 0.0f;
+
+public:
+     Grid();
+    ~Grid();
+    void generateGridMesh(int width, int height, float spacing);
+    void setupBuffers();
+    void render(camera& cam, float deltaTime);
+    GridSettings& getSetting();
+    void cleanup();
+};
+
 enum class RenderMode {
     FILL,
     WIREFRAME,
     POINT
 };
 
-class renderer
-{
-private:
-    float deltatime = 0, prvtime = 0, curnttime = 0, fps = 0 ;
-    unsigned int  count = 0;
-    std::unique_ptr<shader>m_FabricShader;
-    std::unique_ptr<VertexArray>m_va;
-    std::unique_ptr<VertexBuffer>m_vb;
-    std::unique_ptr<IndexBuffer>m_ib;
+// OpenGL debug macro
+#define GlCall(x) renderer::GLClearError(); x; if (!renderer::GLLogCall(#x, __FILE__, __LINE__)) __debugbreak();
+
+class renderer {
 public:
-     renderer();
-     void Draw(VertexArray& va,IndexBuffer& ib,shader& shader) const ; 
-     void Clear(glm::vec3) const ;
-     float logfps(GLFWwindow* window);
-     void logGlVersion();
-     void Rendermode( const RenderMode& Mode);
-     void SpaceTime_fabric( camera& Camera );
+    explicit renderer();
+
+    ~renderer();
+
+    renderer(const renderer&) = delete;
+    renderer& operator=(const renderer&) = delete;
+
+    renderer(renderer&&) = default;
+    renderer& operator=(renderer&&) = default;
+
+    static void GLClearError();
+    static bool GLLogCall(const char* function, const char* file, int line);
+
+    void Draw(const VertexArray& va, const IndexBuffer& ib, const shader& shaderProgram) const;
+    void Clear(const glm::vec3& backgroundColor = glm::vec3(0.0f)) const;
+
+    void Initauad();
+    void renderQuad();
+
+    float updateAndLogFPS(GLFWwindow* window);
+    float getFPS() const { return m_fps; }
+
+    void logGlVersion() const;
+
+    void setRenderMode(RenderMode mode);
+    RenderMode getRenderMode() const { return m_currentRenderMode; }
+
+    void enableDepthTesting(bool enable = true);
+    void enableBlending(bool enable = true);
+    void setViewport(int width, int height);
+
+private:
+   
+    // Helper methods
+    bool validateDrawCall(const VertexArray& va, const IndexBuffer& ib, const shader& shaderProgram) const;
+    static const char* getGLErrorString(GLenum error);
+
+    // Performance monitoring
+    mutable int m_frameCount;
+    mutable float m_fps;
+    mutable double m_lastTime;
+
+    RenderId quadVAO = 0;
+    RenderId quadVBO;
+    // Render state
+    RenderMode m_currentRenderMode;
 };

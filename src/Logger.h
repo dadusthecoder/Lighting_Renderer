@@ -127,9 +127,26 @@ private:
 
 
 #ifdef LGT_DEBUG
-#define LOG(level, message) Logger::GetInstance().Log(level, message)
+
+#define LOG_DEBUG(message)   Logger::GetInstance().Log(LogLevel::DEBUG,   message)
+#define LOG_INFO(message)    Logger::GetInstance().Log(LogLevel::_INFO,   message)
+#define LOG_WARN(message)    Logger::GetInstance().Log(LogLevel::_WARNING,message)
+#define LOG_ERROR(message)   Logger::GetInstance().Log(LogLevel::_ERROR,  message)
+#define LOG_IMP(message)     Logger::GetInstance().Log(LogLevel::_IMP,    message)
+
+#define LOG(level, message)  Logger::GetInstance().Log(level, message)
+
 #else
-#define LOG(level, message) 
+
+#define LOG_DEBUG(message)   ((void)0)
+#define LOG_INFO(message)    ((void)0)
+#define LOG_WARN(message)    ((void)0)
+#define LOG_ERROR(message)   ((void)0)
+#define LOG_IMP(message)     ((void)0)
+#define LOG(level, message)  ((void)0)
+
 #endif
 
-#endif 
+#endif
+
+

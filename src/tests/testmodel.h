@@ -3,55 +3,157 @@
 #include "Renderer/renderer.h"
 #include "Renderer/Mesh.h"
 #include "Renderer/Model.h"
+#include "Test.h"
 
 
+// Forward declarations
+class camera;
+class ShadowCamera;
 
+// Settings structures for better organization
 
-class testModel
-{
+enum  RenderPassType {
+    SHADOW_PASS,
+    COLOR_PASS , 
+};
+
+struct PointLight {
+    glm::vec3 direction = glm::vec3(0.0, 0.0, -1.0);
+    glm::vec3 position = glm::vec3(2.0f, 4.0f, 2.0f);
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+    float intensity = 1.0f;
+    float constant = 1.0f;
+    float linear = 0.09f;
+    float quadratic = 0.032f;
+};
+
+struct TransformSettings {
+    glm::vec3 position = glm::vec3(0.0f);
+    glm::vec3 rotation = glm::vec3(0.0f);
+    glm::vec3 scale = glm::vec3(1.0f);
+};
+
+struct PhysicsSettings {
+    bool enableGravity = false;
+    glm::vec3 velocity = glm::vec3(0.0f);
+    float gravityForce = -9.81f;
+    float groundLevel = -5.0f;
+    float bounceDamping = 0.8f;
+};
+
+struct RenderingSettings {
+    bool useColor = true;
+    glm::vec3 solidColor = glm::vec3(1.0f, 0.0f, 0.0f);
+};
+
+struct PerformanceStats {
+    float fps = 0.0f;
+    float frameTime = 0.0f;
+};
+
+class testModel : public Test{
+
 private:
-	Material niceMaterial = {
-	glm::vec3(0.2f, 0.2f, 0.2f), // Ambient: Low intensity for a subtle base color
-	glm::vec3(0.8f, 0.8f, 0.8f), // Diffuse: Bright and reflective for a metallic look
-	glm::vec3(1.0f, 1.0f, 1.0f), // Specular: High intensity for sharp highlights
-	64.0f                        // Shininess: High value for a glossy surface
-	};
-    std::unique_ptr<shader> m_shader;
-    std::unique_ptr<Texture> m_texture;
+    // Core rendering components
     std::unique_ptr<renderer> m_render;
-    std::unique_ptr<camera> m_camera;
     std::unique_ptr<Model> m_model;
+    std::unique_ptr<Model> m_plane;
+    std::unique_ptr<camera> m_camera;
+    std::unique_ptr<ShadowCamera> m_shadowcam;
+    std::unique_ptr<Grid>   m_grid;
 
-    glm::vec3 modelRotation = { 0.0f, 0.0f, 0.0f };
-    glm::vec3 modelPosition = { 0.0f, 0.0f, 0.0f };
-    glm::vec3 modelScale = { 1.0f, 1.0f, 1.0f };
+    //Buffers 
+    std::unique_ptr<FrameBuffer>m_colorbuffer;
+    std::unique_ptr<FrameBuffer>m_shadowdebugbuffer;
+    std::unique_ptr<DepthBuffer>m_depthbuffer;
 
-	glm::vec3 viewp  = glm::vec3(0.0, 0.0, 0.0);
-	glm::vec3 lightp = glm::vec3(-5.0, 5.0, 1.0);
-	glm::vec3 lightc = glm::vec3(0.4f, 0.4f, 0.4f);
-	glm::vec3 backc  = glm::vec3(0.0, 0.0, 0.0);
-  
+    //shaders
+    std::unique_ptr<shader> m_colorshader;
+    std::unique_ptr<shader> m_depthshader;
+    std::unique_ptr<shader> m_shadowdebugshader;
 
-	glm::mat4 cube  = glm::mat4(1.0f);
-	glm::mat4 model = glm::mat4(1.0f);
 
-	float testTime=0;
-    float m_fps=0;
-    bool m_Gravity = false;
-    glm::vec3 m_velocity = glm::vec3(0.0f);
-    float m_gravityForce = -10.0f;
-    float groundLevel = 1.0f;
+    // Transformation matrices
+    glm::mat4 m_modelMatrix;
 
-    RenderMode m_renderMode = RenderMode::WIREFRAME;
+    // Settings structures
+    PointLight m_lightSettings;
+    Material m_materialSettings;
+    TransformSettings m_transformSettings;
+    PhysicsSettings m_physicsSettings;
+    RenderingSettings m_renderingSettings;
+    PerformanceStats m_performanceStats;
+
+    // Environment settings
+    glm::vec3 m_backgroundColor = glm::vec3(0.1f, 0.1f, 0.15f);
+    glm::vec3 m_viewPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    ImVec2 m_sceneSize = { 800 , 800 };
+
+    //helpers var
+    float m_deltaTime;
+    float m_timestep; 
+    RenderPassType m_renderpasstype = RenderPassType::COLOR_PASS;
+    ImGuizmo::OPERATION m_currentop = ImGuizmo::TRANSLATE;
+
+    // Camera and input settings
+    float m_speed;
+    RenderMode m_renderMode = RenderMode::FILL;
+
+    // Window reference for FPS calculation
     GLFWwindow* m_window = nullptr;
-    float m_speed ;
 
-   ImGuizmo::OPERATION m_guizmoOp = ImGuizmo::TRANSLATE;
+    // Helper methods
+    void updateModelMatrix();
+    void loadModel(const std::string& filepath);
+    void loadShader(const std::string& filepath);
+
+    // ImGui rendering methods
+   
+    void createDockSpace();
+    void renderMainControlPanel();
+    void renderSceneViewport();
+    void renderAssetBrowser();
+    void renderPerformancePanel();
+    void renderTransformTab();
+    void renderLightingTab();
+    void renderMaterialTab();
+    void renderPhysicsTab();
+    void renderEnvironmentTab();
+    void renderGizmoControls();
+    void renderGizmoManipulator(ImGuizmo::OPERATION operation);
+    void setupImGuiStyle();
+    void styledSeparator(const char* text);
+    void renderPresetControls();
+
+
+    //  main render passes 
+
+    void renderColorPass();
+    void renderShadowPass();
+    void renderShadowDebugPass();
 
 public:
     testModel();
-	~testModel();
-    void onRender();
-    void onUpdate(GLFWwindow* window);
-    void onImguiRnder();
+    ~testModel();
+
+    void onUpdate(GLFWwindow* window) override;
+    void onRender() override;
+    void onImguiRender() override;
+
+    // Getters for accessing settings (if needed from outside)
+    const PointLight& getLightSettings() const { return m_lightSettings; }
+    const Material& getMaterialSettings() const { return m_materialSettings; }
+    const TransformSettings& getTransformSettings() const { return m_transformSettings; }
+    const RenderPassType& GetRenderPassType()const { return m_renderpasstype; }
+
+    // Setters for programmatic control
+    void setLightPosition(const glm::vec3& position) { m_lightSettings.position = position; }
+    void setLightColor(const glm::vec3& color) { m_lightSettings.color = color; }
+    void setModelPosition(const glm::vec3& position) { m_transformSettings.position = position; }
+    void setRenderPass(RenderPassType type) { m_renderpasstype = type; };
+};
+
+class Input {
+    
+
 };

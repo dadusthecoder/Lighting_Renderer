@@ -10,6 +10,8 @@ struct vertex {
 };
 class Mesh {
 private:
+
+    glm::mat4 _transform;
     Material _material;
     std::vector<std::shared_ptr<Texture>> Textures;
     std::vector<unsigned int>m_indices;
@@ -19,4 +21,6 @@ public:
     Mesh(const std::vector<vertex>& data, const std::vector<unsigned int>& indices,const Material& material , std::vector<std::shared_ptr<Texture>> textures);
     void cleanUp();
     void render( const shader& Shader) ;
+    void setTransform(glm::mat4 transform);
+    glm::mat4 getTransform();
 };
