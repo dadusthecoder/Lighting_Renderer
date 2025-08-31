@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 # my own 
 log.txt
+/src/helpers
