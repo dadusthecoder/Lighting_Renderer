@@ -31,11 +31,11 @@ testModel::testModel() : m_speed(0.030f)
      
     // Load default model and shader
     try {
-        m_model  = std::make_unique<Model>("res/modles/Sphere.fbx");
+        m_scene = std::make_unique<lgt::Scene>();
+        m_model  = std::make_unique<Model>("res/modles/Sphere.fbx" ,&*m_scene);
         m_colorshader = std::make_unique<shader>("res/shaders/bsc.shader" , ShaderType::COLORSHADER);
         m_depthshader = std::make_unique<shader>("res/shaders/Depth.shader" , ShaderType::DEPTHSHADER);
         m_shadowdebugshader = std::make_unique<shader>("res/shaders/ShadowDebug.shader" , ShaderType::COLORSHADER);
-        
         m_grid = std::make_unique<Grid>();
 
         m_shadowdebugbuffer = std::make_unique<FrameBuffer>(SHADOW_WIDTH,SHADOW_HEIGHT);
@@ -85,7 +85,7 @@ void testModel::renderColorPass()
     shader::ScopedBind shaderBind(*m_colorshader);
 
 
-    m_colorshader->setMat4("u_model", m_modelMatrix);
+    //m_colorshader->setMat4("u_model", m_modelMatrix);
     m_colorshader->setMat4("u_view", m_camera->GetViewMatrix());
     m_colorshader->setMat4("u_projection", m_camera->GetProjectionMatrix());
     m_colorshader->setMat4("u_lightprojection", m_shadowcam->GetProjectionMatrix());
@@ -226,7 +226,6 @@ void testModel::onImguiRender()
     renderSceneViewport();
     renderAssetBrowser();
     renderPerformancePanel();
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
@@ -553,7 +552,7 @@ void testModel::renderSceneViewport()
     case RenderPassType::COLOR_PASS:
         ImGui::Image((ImTextureID)(intptr_t)m_colorbuffer->GetTextureId(),
             m_sceneSize, ImVec2(0, 1), ImVec2(1, 0));
-            renderGizmoManipulator(m_currentop);
+               m_scene->RenderScenePanel(m_camera->GetViewMatrix() , m_camera->GetProjectionMatrix() , m_currentop);
         break;
     }
 

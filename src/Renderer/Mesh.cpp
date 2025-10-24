@@ -1,7 +1,10 @@
 #include "Mesh.h"
 
-Mesh::Mesh(const std::vector<vertex>& data, const std::vector<unsigned int>& indices, const Material& material, std::vector<std::shared_ptr<Texture>> textures)
-    : m_indices(indices), _material(material), Textures(textures)
+Mesh::Mesh(const std::vector<vertex>& data
+        ,const std::vector<unsigned int>& indices
+        ,const Material& material
+        ,std::vector<std::shared_ptr<Texture>> textures
+        ) : m_indices(indices), _material(material), Textures(textures) 
 {
     // Create buffers
     glGenVertexArrays(1, &m_vao);
@@ -87,7 +90,7 @@ void Mesh::render(const shader& shader)
         break;
     }
   
-    
+       
     glBindVertexArray(m_vao);
     GlCall(glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr));
     glBindVertexArray(0);

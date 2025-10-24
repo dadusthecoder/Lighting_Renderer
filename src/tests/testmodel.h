@@ -4,6 +4,7 @@
 #include "Renderer/Mesh.h"
 #include "Renderer/Model.h"
 #include "Test.h"
+#include "Renderer/Scene.h"
 
 
 // Forward declarations
@@ -55,6 +56,7 @@ class testModel : public Test{
 
 private:
     // Core rendering components
+    std::unique_ptr<lgt::Scene> m_scene;
     std::unique_ptr<renderer> m_render;
     std::unique_ptr<Model> m_model;
     std::unique_ptr<Model> m_plane;
@@ -124,7 +126,7 @@ private:
     void setupImGuiStyle();
     void styledSeparator(const char* text);
     void renderPresetControls();
-
+    void renderScenePanel();
 
     //  main render passes 
 

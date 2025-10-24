@@ -7,9 +7,10 @@
 #include <GLFW/glfw3.h>
 
 #include<imgui.h>
-#include<imgui_impl_opengl3.h>
 #include<ImGuizmo.h>
+#include<imgui_impl_opengl3.h>
 #include<imgui_impl_glfw.h>
+
 
 #define GLM_ENABLE_EXPERIMENTAL 
 #include<glm/glm.hpp>
