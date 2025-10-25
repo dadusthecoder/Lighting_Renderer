@@ -1,4 +1,4 @@
-﻿# 🌌 OpenGL Experimental Renderer
+z﻿# 🌌 OpenGL Experimental Renderer
 
 This project is an **experimental renderer** built with **C++ and OpenGL**, created as a personal learning journey into the world of modern graphics programming and real-time rendering pipelines.
 
@@ -7,6 +7,8 @@ The long-term goal is to evolve this project into a **Physically Based Renderer 
 ---
 ## screenshots
 ![Image](https://github.com/user-attachments/assets/488a5f97-6180-4530-9470-11fa5bdac939)
+<img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/48372778-e232-4100-94d5-20b0431ac580" />
+
 
 ## 📸 Current Features (Experimental)
 
