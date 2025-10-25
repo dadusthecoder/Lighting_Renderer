@@ -1,96 +1,101 @@
-z﻿# 🌌 OpenGL Experimental Renderer
-
-This project is an **experimental renderer** built with **C++ and OpenGL**, created as a personal learning journey into the world of modern graphics programming and real-time rendering pipelines.
-
-The long-term goal is to evolve this project into a **Physically Based Renderer (PBR)** from scratch. For now, it serves as a sandbox for experimenting with rendering techniques, shaders, and scene management systems.
-
----
-## screenshots
-![Image](https://github.com/user-attachments/assets/488a5f97-6180-4530-9470-11fa5bdac939)
-<img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/48372778-e232-4100-94d5-20b0431ac580" />
+⚡ Lighting — Experimental OpenGL Renderer
 
 
-## 📸 Current Features (Experimental)
 
-> These are early implementations meant to support learning and experimentation.
 
-- 🎮 **Interactive Camera System** with configurable movement speed
-- 💡 **Lighting Settings Panel**
-  - Position control
-  - RGB color picker
-  - Auto-alignment with the camera
-- 🎨 **Real-Time Shader Reloading**
-  - Reload vertex/fragment shaders without restarting the app
-- 📦 **Model Controls**
-  - Load `.fbx` or `.obj` files
-  - Position, Rotation (in degrees), and Scaling transforms
-  - Reset buttons for convenience
-- 🌌 **Environment Controls**
-  - Background color configuration
-- 🧭 **Camera Diagnostics Panel**
-  - Real-time position and direction info
-- 🧪 **Render Mode Switching**
-  - Fill, Wireframe, Point modes
-- ⚖️ **Gravity Toggle** (basic simulation toggle)
-- 📈 **FPS Display** (updated in real time via ImGui)
 
----
 
-## 🚀 Planned Features
 
-> Future development will progressively introduce more advanced rendering concepts.
 
-- ✅ Physically Based Rendering (PBR)
-  - Albedo, Roughness, Metalness, Normal maps
-- ✅ Image-Based Lighting (IBL) with HDR
-- ✅ Shadow Mapping (Directional + Point lights)
-- ✅ Material system with GUI-based editing
-- ✅ Post-processing effects (Bloom, FXAA, Tonemapping)
-- ✅ Scene hierarchy and editor
-- ✅ Entity Component System (ECS) for simulation
-- ✅ Asset hot-reloading
+Lighting is an experimental real-time renderer built with C++ and OpenGL, designed as a personal playground for learning modern rendering pipelines, scene editors, and physically based rendering (PBR) from the ground up.
 
----
+🧩 Overview
 
-## 🧱 Tech Stack
+This project began as a deep dive into OpenGL fundamentals and has since evolved into a modular, editor-driven renderer.
+The end goal: create a complete physically based rendering system and in-engine scene editor, with support for ECS, IBL, and material workflows.
 
-| Component              |                  Tool used                          |
-|------------------------|-----------------------------------------------------|
-| **Graphics API**       | OpenGL (Core Profile)                               |
-| **GUI**                | [Dear ImGui](https://github.com/ocornut/imgui)      |
-| **Windowing/Input**    | [GLFW](https://github.com/glfw/glfw)                |
-| **Model Loading**      | [Assimp](https://github.com/assimp/assimp)          |
-| **Math**               | [GLM](https://github.com/g-truc/glm)                |
-| **Development IDE**    | Visual Studio 2022                                  |
+✨ Core Features
 
----
+🔬 Early experimental implementations — built for exploration and learning.
 
-## 🛠️ Building the Project
+🎮 Interactive Camera System — smooth navigation, customizable movement speed
 
-### Prerequisites
-- Visual Studio 2022 (or later)
-- CMake (optional if using VS solution directly)
-- OpenGL-compatible GPU
+💡 Lighting Panel — real-time position, direction, color, and attenuation controls
 
-### Build Instructions
-1. Clone the repo:
-   bash: git clone https://github.com/dadusthecoder/opengl2.git
+🔁 Hot Shader Reloading — update shaders instantly without restarting
 
-2. Open the .sln file in Visual Studio 2022.
-  - Make sure the following directories are linked properly using vcpkg or you can link them manully:
-  - /Dependencies ( GLFW,GLEW,Assimp ,glm , imGui)
-  ## resources
-  - /res (Shaders, models) 
+🧱 Model Controls — load .fbx / .obj with editable transforms (position, rotation, scale)
 
- 3. Build and Run.
- 
+🧭 Camera Debug HUD — real-time position + direction readouts
 
-### Controls and UI
-  - Use mouse and WASD keys to navigate the camera.
-  - Use the ImGui panel to:
-  - Change model position, rotation, scale
-  - Toggle gravity
-  - Change light position and color
-  - Reload shaders or models in real-time
+🌌 Render Mode Switching — Fill / Wireframe / Point rendering
 
-  
+⚙️ Gravity Simulation Toggle — lightweight physics toggle
+
+📊 Performance Overlay — live FPS + frame time metrics
+
+🧠 Roadmap
+
+What’s next for Lighting — the path toward a full-fledged PBR engine.
+
+✅ Physically Based Rendering (Albedo, Roughness, Metalness, Normal)
+
+✅ HDR & Image-Based Lighting (IBL)
+
+✅ Dynamic Shadow Mapping (Directional + Point)
+
+✅ Material system with live ImGui editing
+
+✅ Post-Processing: Bloom, FXAA, Tonemapping
+
+✅ Entity-Component System (ECS)
+
+✅ Asset Hot Reloading
+
+✅ Scene Hierarchy & Editor Tools
+
+🛠️ Tech Stack
+System	Library / Tool
+Graphics API	OpenGL (Core Profile)
+GUI	Dear ImGui
+Windowing/Input	GLFW
+Model Importing	Assimp
+Math Library	GLM
+Build System	Visual Studio 2022 / CMake
+⚙️ Build Instructions
+Prerequisites
+
+Visual Studio 2022 (or newer)
+
+OpenGL-compatible GPU
+
+vcpkg
+ (recommended for dependencies)
+
+Steps
+# Clone the repo
+git clone https://github.com/dadusthecoder/opengl2.git
+
+
+Open Lighting.sln in Visual Studio 2022
+
+Ensure dependencies (GLFW, GLEW, Assimp, GLM, ImGui) are linked via vcpkg or /Dependencies
+
+Place shaders and models in /res
+
+Build and run 🚀
+
+🎮 Controls
+Action	Key
+Move Camera	W, A, S, D
+Look Around	Mouse
+Adjust Model	ImGui Transform Panel
+Change Lighting	ImGui Light Panel
+Reload Shaders	“Reload” Button
+📷 Gallery
+
+
+
+
+⚡ Lighting — built for learning, experimentation, and pushing OpenGL to its creative limits.
+Enhanced PBR Renderer • OpenGL + ImGui
