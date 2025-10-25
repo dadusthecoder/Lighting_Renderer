@@ -1,101 +1,57 @@
 ⚡ Lighting — Experimental OpenGL Renderer
 
+Lighting is an experimental renderer built in C++ with OpenGL, created to explore real-time rendering pipelines, physically based shading, and editor design.
+It serves as a sandbox for learning modern rendering techniques and developing a full PBR workflow from scratch.
 
+✨ Current Highlights
 
+Real-time lighting and material editing
 
+Hot-reloadable shader system
 
+Asset loading with transform controls
 
+Integrated editor using ImGui
 
+Performance and render diagnostics overlay
 
-Lighting is an experimental real-time renderer built with C++ and OpenGL, designed as a personal playground for learning modern rendering pipelines, scene editors, and physically based rendering (PBR) from the ground up.
+🚀 In Development
 
-🧩 Overview
+Physically Based Rendering (PBR)
 
-This project began as a deep dive into OpenGL fundamentals and has since evolved into a modular, editor-driven renderer.
-The end goal: create a complete physically based rendering system and in-engine scene editor, with support for ECS, IBL, and material workflows.
+HDR & Image-Based Lighting (IBL)
 
-✨ Core Features
+Dynamic Shadows (Directional & Point)
 
-🔬 Early experimental implementations — built for exploration and learning.
+Post-Processing (Bloom, FXAA, Tonemapping)
 
-🎮 Interactive Camera System — smooth navigation, customizable movement speed
+ECS-driven scene architecture
 
-💡 Lighting Panel — real-time position, direction, color, and attenuation controls
+Material and asset hot-reloading
 
-🔁 Hot Shader Reloading — update shaders instantly without restarting
-
-🧱 Model Controls — load .fbx / .obj with editable transforms (position, rotation, scale)
-
-🧭 Camera Debug HUD — real-time position + direction readouts
-
-🌌 Render Mode Switching — Fill / Wireframe / Point rendering
-
-⚙️ Gravity Simulation Toggle — lightweight physics toggle
-
-📊 Performance Overlay — live FPS + frame time metrics
-
-🧠 Roadmap
-
-What’s next for Lighting — the path toward a full-fledged PBR engine.
-
-✅ Physically Based Rendering (Albedo, Roughness, Metalness, Normal)
-
-✅ HDR & Image-Based Lighting (IBL)
-
-✅ Dynamic Shadow Mapping (Directional + Point)
-
-✅ Material system with live ImGui editing
-
-✅ Post-Processing: Bloom, FXAA, Tonemapping
-
-✅ Entity-Component System (ECS)
-
-✅ Asset Hot Reloading
-
-✅ Scene Hierarchy & Editor Tools
-
-🛠️ Tech Stack
-System	Library / Tool
-Graphics API	OpenGL (Core Profile)
-GUI	Dear ImGui
-Windowing/Input	GLFW
-Model Importing	Assimp
-Math Library	GLM
-Build System	Visual Studio 2022 / CMake
-⚙️ Build Instructions
-Prerequisites
-
-Visual Studio 2022 (or newer)
-
-OpenGL-compatible GPU
-
-vcpkg
- (recommended for dependencies)
-
-Steps
-# Clone the repo
+🛠 Tech Stack
+System	Library
+Graphics	OpenGL (Core Profile)
+UI	Dear ImGui
+Window/Input	GLFW
+Model Import	Assimp
+Math	GLM
+Build	Visual Studio 2022 / CMake
+⚙️ Build
 git clone https://github.com/dadusthecoder/opengl2.git
 
 
-Open Lighting.sln in Visual Studio 2022
+Open Lighting.sln in Visual Studio
 
-Ensure dependencies (GLFW, GLEW, Assimp, GLM, ImGui) are linked via vcpkg or /Dependencies
+Link dependencies (GLFW, GLEW, Assimp, GLM, ImGui) via vcpkg or /Dependencies
 
-Place shaders and models in /res
+Add shaders and assets in /res
 
-Build and run 🚀
+Build & run
 
-🎮 Controls
-Action	Key
-Move Camera	W, A, S, D
-Look Around	Mouse
-Adjust Model	ImGui Transform Panel
-Change Lighting	ImGui Light Panel
-Reload Shaders	“Reload” Button
-📷 Gallery
+📸 Screenshots
 
 
 
 
-⚡ Lighting — built for learning, experimentation, and pushing OpenGL to its creative limits.
-Enhanced PBR Renderer • OpenGL + ImGui
+⚡ A personal journey into modern rendering — built for experimentation, not perfection.
