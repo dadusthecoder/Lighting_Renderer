@@ -27,18 +27,24 @@ Dynamic Shadows (Directional & Point)
 
 Post-Processing (Bloom, FXAA, Tonemapping)
 
-<img width="1918" height="1075" alt="Screenshot 2025-10-25 230854" src="https://github.com/user-attachments/assets/2724f87e-e0a5-4b4b-9e44-ad46adf3dba7" />
-
 Material and asset hot-reloading
 
 🛠 Tech Stack
+
 System	Library
+
 Graphics	OpenGL (Core Profile)
+
 UI	Dear ImGui
+
 Window/Input	GLFW
+
 Model Import	Assimp
+
 Math	GLM
+
 Build	Visual Studio 2022 / CMake
+
 ⚙️ Build
 git clone https://github.com/dadusthecoder/opengl2.git
 
@@ -52,6 +58,9 @@ Add shaders and assets in /res
 Build & run
 
 📸 Screenshots
+
+<img width="1918" height="1075" alt="Screenshot 2025-10-25 230854" src="https://github.com/user-attachments/assets/2724f87e-e0a5-4b4b-9e44-ad46adf3dba7" />
+
 
 
 
