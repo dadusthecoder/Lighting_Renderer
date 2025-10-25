@@ -5,6 +5,8 @@ It serves as a sandbox for learning modern rendering techniques and developing a
 
 ✨ Current Highlights
 
+ECS-driven scene architecture
+
 Real-time lighting and material editing
 
 Hot-reloadable shader system
@@ -25,7 +27,7 @@ Dynamic Shadows (Directional & Point)
 
 Post-Processing (Bloom, FXAA, Tonemapping)
 
-ECS-driven scene architecture
+<img width="1918" height="1075" alt="Screenshot 2025-10-25 230854" src="https://github.com/user-attachments/assets/2724f87e-e0a5-4b4b-9e44-ad46adf3dba7" />
 
 Material and asset hot-reloading
 
